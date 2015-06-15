@@ -17,16 +17,6 @@ package { ["php5-common", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-my
     require => [Exec["apt-get update"], Package["mysql-client"], Package["apache2"]],
 }
 
-package { ["nodejs"]:
-    ensure => present,
-    require => Exec["apt-get update"],
-}
-
-package { ["npm"]:
-    ensure => present,
-    require => Package["nodejs"],
-}
-
 service { "apache2":
     ensure => "running",
     require => Package["apache2"],
