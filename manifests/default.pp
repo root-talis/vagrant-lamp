@@ -11,7 +11,7 @@ package { ["apache2", "mysql-server", "mysql-client"]:
     require => Exec["apt-get update"],
 }
 
-package { ["php5-common", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-mysql", "php5-gd", "php5-mcrypt", "php5-curl"]:
+package { ["php5-common", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-mysql", "php5-gd", "php5-mcrypt", "php5-curl", "php5-sqlite"]:
     ensure => present,
     notify => Service["apache2"],
     require => [Exec["apt-get update"], Package["mysql-client"], Package["apache2"]],
