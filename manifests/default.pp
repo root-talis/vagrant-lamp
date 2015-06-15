@@ -11,7 +11,7 @@ package { ["apache2", "mysql-server", "mysql-client"]:
     require => Exec["apt-get update"],
 }
 
-package { ["php5-common", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-mysql"]:
+package { ["php5-common", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-mysql", "php5-gd", "php5-mcrypt", "php5-curl"]:
     ensure => present,
     notify => Service["apache2"],
     require => [Exec["apt-get update"], Package["mysql-client"], Package["apache2"]],
@@ -48,6 +48,21 @@ exec { "/usr/sbin/a2enmod rewrite":
     require => Package["apache2"],
 }
 
+#
+# Enable php5_mcrypt
+#
+
+file { '/etc/php5/apache2/conf.d/20-mcrypt.ini':
+   ensure => 'link',
+   target => '../../mods-available/mcrypt.ini',
+   notify => Service["apache2"],
+}
+
+file { '/etc/php5/cli/conf.d/20-mcrypt.ini':
+   ensure => 'link',
+   target => '../../mods-available/mcrypt.ini',
+   notify => Service["apache2"],
+}
 
 #
 # Make sure Apache is running as vagrant user
